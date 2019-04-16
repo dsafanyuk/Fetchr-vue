@@ -71,7 +71,7 @@ export default new Router({
   routes: [
     {
       path: '/admin',
-      component: () => import(/* webpackChunkName: "admin" */ AdminLayout),
+      component: AdminLayout,
       beforeEnter: (to, from, next) => {
         axios
           .get('api/admin/verify')
@@ -82,31 +82,31 @@ export default new Router({
               next({ path: '/nicetry' });
             }
           })
-          .catch(() => {
+          .catch((error) => {
             next({ path: '/nicetry' });
           });
       },
       children: [
         {
           path: '',
-          component: () => import(/* webpackChunkName: "admin" */ AdminDashboard),
+          component: AdminDashboard,
           beforeEnter: requireAuth,
         },
         {
           path: 'users/manage',
-          component: () => import(/* webpackChunkName: "admin" */ AdminManageUsers),
+          component: AdminManageUsers,
           beforeEnter: requireAuth,
         },
         {
           path: 'products/manage',
-          component: () => import(/* webpackChunkName: "admin" */ AdminManageProducts),
+          component: AdminManageProducts,
           beforeEnter: requireAuth,
         },
       ],
     },
     {
       path: '/',
-      component: () => import(/* webpackChunkName: "main" */ MainLayout),
+      component: MainLayout,
       beforeEnter: (to, from, next) => {
         if (to.path === '/') {
           next({ path: '/home' });
@@ -117,32 +117,32 @@ export default new Router({
       children: [
         {
           path: '/account',
-          component: () => import(/* webpackChunkName: "main" */ Account),
+          component: Account,
           beforeEnter: requireAuth,
         },
         {
           path: '/orders',
-          component: () => import(/* webpackChunkName: "main" */ Orders),
+          component: Orders,
           beforeEnter: requireAuth,
         },
         {
           path: '/dashboard',
-          component: () => import(/* webpackChunkName: "main" */ Dashboard),
+          component: Dashboard,
           beforeEnter: requireAuth,
         },
         {
           path: '/confirmation',
-          component: () => import(/* webpackChunkName: "main" */ Confirmation),
+          component: Confirmation,
           beforeEnter: requireAuth,
         },
         {
           path: '/checkout',
-          component: () => import(/* webpackChunkName: "main" */ Checkout),
+          component: Checkout,
           beforeEnter: requireAuth,
         },
         {
           path: '/view',
-          component: () => import(/* webpackChunkName: "main" */ View),
+          component: View,
           beforeEnter: requireAuth,
         },
       ],
@@ -161,11 +161,7 @@ export default new Router({
       component: Register,
       beforeEnter: requireLoggedOut,
     },
-    {
-      path: '/courier',
-      component: () => import(/* webpackChunkName: "main" */ CourierLayout),
-      beforeEnter: requireAuth,
-    },
+    { path: '/courier', component: CourierLayout, beforeEnter: requireAuth },
     { path: '/nicetry', component: NiceTry, beforeEnter: requireAuth },
     { path: '*', component: NotFoundComponent },
   ],

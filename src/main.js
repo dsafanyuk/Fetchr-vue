@@ -11,8 +11,9 @@ import VueApexCharts from 'vue-apexcharts';
 import IdleVue from 'idle-vue';
 import browserCookies from 'browser-cookies';
 import App from './App.vue';
-import store from './store';
+import store from './store/index';
 import router from './router';
+import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 
 Vue.use(VueApexCharts);
 Vue.component('apexchart', VueApexCharts);

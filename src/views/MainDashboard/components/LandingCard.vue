@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+  <v-flex lg3 md4 sm6>
     <div class="product-card">
       <div class="card z-depth-4 shadow">
         <div class="card-content">
@@ -10,7 +10,7 @@
         <div class="card-img">
           <img class="lozad" :data-src="product.product_url" :alt="product.product_name">
         </div>
-        <hr>
+        <v-divider class="ma-3"></v-divider>
         <h5 class="text-center headline">${{product.price.toFixed(2)}}</h5>
         <div style="display:flex" class="btn_container">
           <div class="favorite_button">
@@ -61,14 +61,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script>
-import Toasted from 'vue-toasted';
-import browserCookies from 'browser-cookies';
-import lozad from 'lozad';
-import axios from '../../../axios.js';
+import Toasted from "vue-toasted";
+import browserCookies from "browser-cookies";
+import lozad from "lozad";
+import axios from "../../../axios.js";
 
 export default {
   props: {
@@ -78,12 +78,12 @@ export default {
       price: Number,
       category: String,
       product_url: String,
-      is_favorite: Boolean,
-    },
+      is_favorite: Boolean
+    }
   },
   data() {
     return {
-      isFavorite: this.product.is_favorite,
+      isFavorite: this.product.is_favorite
     };
   },
   components: {},
@@ -96,55 +96,55 @@ export default {
   computed: {
     // Check if item is in cart, returns boolean value
     inCart() {
-      return this.$store.getters['cart/cartItems'].includes(this.product);
-    },
+      return this.$store.getters["cart/cartItems"].includes(this.product);
+    }
   },
   methods: {
     favorite() {
       axios
-        .post('api/users/favorite', {
-          user_id: browserCookies.get('user_id'),
-          product_id: this.product.product_id,
+        .post("api/users/favorite", {
+          user_id: browserCookies.get("user_id"),
+          product_id: this.product.product_id
         })
-        .then((response) => {
+        .then(response => {
           if (response.status === 200) {
-            this.isFavorite = 'true';
-            this.product.is_favorite = 'true';
+            this.isFavorite = "true";
+            this.product.is_favorite = "true";
             this.$toasted
-              .success('Added to favorites!', {
-                theme: 'bubble',
-                position: 'top-center',
-                icon: 'favorite',
+              .success("Added to favorites!", {
+                theme: "bubble",
+                position: "top-center",
+                icon: "favorite",
                 action: [
                   {
-                    class: 'toast-action',
-                    text: 'SHOW',
+                    class: "toast-action",
+                    text: "SHOW",
                     onClick: (e, toastObject) => {
                       toastObject.goAway(0);
                       this.$store.commit(
-                        'dashboard/setSelectedCategory',
-                        'Favorites',
+                        "dashboard/setSelectedCategory",
+                        "Favorites"
                       );
-                    },
+                    }
                   },
                   {
-                    icon: 'clear',
+                    icon: "clear",
                     onClick: (e, toastObject) => {
                       toastObject.goAway(0);
-                    },
-                  },
-                ],
+                    }
+                  }
+                ]
               })
               .goAway(5000);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
           this.$toasted
-            .error('Error favoriting', {
-              theme: 'bubble',
-              position: 'top-center',
-              icon: 'report_problem',
+            .error("Error favoriting", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
             })
             .goAway(1000);
           if (error.response) {
@@ -158,30 +158,30 @@ export default {
     },
     unfavorite() {
       axios
-        .post('/api/users/unfavorite', {
-          user_id: browserCookies.get('user_id'),
-          product_id: this.product.product_id,
+        .post("/api/users/unfavorite", {
+          user_id: browserCookies.get("user_id"),
+          product_id: this.product.product_id
         })
-        .then((response) => {
+        .then(response => {
           if (response.status === 200) {
-            this.isFavorite = 'false';
-            this.product.is_favorite = 'false';
+            this.isFavorite = "false";
+            this.product.is_favorite = "false";
             this.$toasted
-              .success('Removed from favorites!', {
-                theme: 'bubble',
-                position: 'top-center',
-                icon: 'favorite_border',
+              .success("Removed from favorites!", {
+                theme: "bubble",
+                position: "top-center",
+                icon: "favorite_border"
               })
               .goAway(1000);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
           this.$toasted
-            .error('Error unfavoriting', {
-              theme: 'bubble',
-              position: 'top-center',
-              icon: 'report_problem',
+            .error("Error unfavoriting", {
+              theme: "bubble",
+              position: "top-center",
+              icon: "report_problem"
             })
             .goAway(1000);
           if (error.response) {
@@ -197,24 +197,24 @@ export default {
     addItem() {
       this.$toasted
         .success(`${this.product.product_name} added to cart`, {
-          theme: 'bubble',
-          position: 'top-center',
-          icon: 'shopping_cart',
+          theme: "bubble",
+          position: "top-center",
+          icon: "shopping_cart"
         })
         .goAway(1500);
-      this.$store.commit('cart/addItem', this.product);
+      this.$store.commit("cart/addItem", this.product);
     },
     incQuantity(product) {
       this.$toasted
         .success(`${this.product.product_name} added to cart`, {
-          theme: 'bubble',
-          position: 'top-center',
-          icon: 'shopping_cart',
+          theme: "bubble",
+          position: "top-center",
+          icon: "shopping_cart"
         })
         .goAway(1500);
-      this.$store.commit('cart/incQuantity', product);
-    },
-  },
+      this.$store.commit("cart/incQuantity", product);
+    }
+  }
 };
 </script>
 

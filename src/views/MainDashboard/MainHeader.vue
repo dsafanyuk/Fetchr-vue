@@ -38,17 +38,12 @@
         >
       </router-link>
       <v-spacer></v-spacer>
-      <v-flex
-        v-on:click="scrollToTop"
-        align-self-center
-        style="margin-left: 30px"
-        class="hidden-sm-and-down"
-      >
+      <v-flex xs10 v-on:click="scrollToTop" align-self-center class="hidden-sm-and-down">
         <transition name="fade" v-on:enter="enter" v-on:leave="leave">
           <h4 class="white--text" style="margin-top: 20px" v-if="show">{{showText}}</h4>
         </transition>
       </v-flex>
-      <div class="hidden-sm-and-down">
+      <v-flex xs2 class="hidden-sm-and-down">
         <v-btn v-on:click="goToDashboard" depressed icon>
           <v-icon color="white">home</v-icon>
         </v-btn>
@@ -61,7 +56,7 @@
             light
           >Hi, error face &nbsp;&nbsp;▼</v-btn>
           <v-btn v-else flat slot="activator" color="white" light>Hi, {{ firstName }} &nbsp;&nbsp;▼</v-btn>
-          <v-list dense class="pt-0" style="cursor: pointer">
+          <v-list dense style="cursor: pointer">
             <v-list-tile
               v-for="menuItem in menu"
               :key="menuItem.title"
@@ -83,8 +78,8 @@
             </v-list-tile>
           </v-list>
         </v-menu>
-      </div>
-      <div class="text-xs-right col-xs-4">
+      </v-flex>
+      <v-flex>
         <v-badge color="red" right overlap>
           <span slot="badge" v-if="numOfItemsInCart>0">{{numOfItemsInCart}}</span>
           <v-btn
@@ -100,7 +95,7 @@
             <v-icon color="white">shopping_cart</v-icon>
           </v-btn>
         </v-badge>
-      </div>
+      </v-flex>
       <v-layout slot="extension" v-if="isLanding" height="25px">
         <v-flex xs6 offset-xs3>
           <v-spacer></v-spacer>
@@ -134,79 +129,79 @@
   </div>
 </template>
 <script>
-import browserCookies from 'browser-cookies';
-import ShoppingCart from './ShoppingCart.vue';
-import Wallet from './Wallet.vue';
+import browserCookies from "browser-cookies";
+import ShoppingCart from "./ShoppingCart.vue";
+import Wallet from "./Wallet.vue";
 
 export default {
   data() {
-    'MainHeader';
+    "MainHeader";
 
     return {
-      firstName: browserCookies.get('first_name'),
+      firstName: browserCookies.get("first_name"),
       showCart: false,
       categories: [
         {
-          name: 'Popular',
-          icon: 'fas fa-fire-alt',
+          name: "Popular",
+          icon: "fas fa-fire-alt"
         },
         {
-          name: 'Snacks',
-          icon: 'fas fa-hamburger',
+          name: "Snacks",
+          icon: "fas fa-hamburger"
         },
         {
-          name: 'Drinks',
-          icon: 'fas fa-mug-hot',
+          name: "Drinks",
+          icon: "fas fa-mug-hot"
         },
         {
-          name: 'Personal',
-          icon: 'fas fa-toilet-paper',
+          name: "Personal",
+          icon: "fas fa-toilet-paper"
         },
         {
-          name: 'Electronics',
-          icon: 'fas fa-headphones-alt',
+          name: "Electronics",
+          icon: "fas fa-headphones-alt"
         },
         {
-          name: 'Misc',
-          icon: 'fas fa-random',
+          name: "Misc",
+          icon: "fas fa-random"
         },
         {
-          name: 'Favorites',
-          icon: 'fas fas fa-heart',
-        },
+          name: "Favorites",
+          icon: "fas fas fa-heart"
+        }
       ],
       menu: [
-        { title: 'Switch To Courier', icon: 'fa fa-truck' },
-        { title: 'Account', icon: 'fas fa-user-alt fa-s' },
-        { title: 'Orders', icon: 'far fa-list-alt fa-s' },
+        { title: "Switch To Courier", icon: "fa fa-truck" },
+        { title: "Account", icon: "fas fa-user-alt fa-s" },
+        { title: "Orders", icon: "far fa-list-alt fa-s" },
         {
-          title: 'Wallet',
-          icon: 'fas fa-wallet fa-s',
+          title: "Wallet",
+          icon: "fas fa-wallet fa-s"
         },
         {
-          title: 'Logout',
-          icon: 'fas fa-sign-out-alt fa-s',
-        },
+          title: "Logout",
+          icon: "fas fa-sign-out-alt fa-s"
+        }
       ],
       textLists: [
-        'Remember, you cannot change your password',
-        'You can go to shopping page by clicking Fetchr icon',
-        'All items are non refundable',
-        'Try favoriting an item',
-        'Your wallet can hold $5000',
+        "Remember, you cannot change your password",
+        "You can go to shopping page by clicking Fetchr icon",
+        "All items are non refundable",
+        "Try favoriting an item",
+        "Your wallet can hold $5000"
       ],
-      showText: '',
+      showText: "",
       textTimeout: null,
       show: false,
-      indexText: 0,
+      indexText: 0
     };
   },
   components: {
     ShoppingCart,
-    Wallet,
+    Wallet
   },
   created() {
-    this.$store.dispatch('wallet/getWalletBalance');
+    this.$store.dispatch("wallet/getWalletBalance");
     this.showText = this.textLists[this.randomIndex()];
     this.textTimeout = setTimeout(() => {
       this.show = true;
@@ -215,30 +210,30 @@ export default {
   computed: {
     searchTerm: {
       get() {
-        return this.$store.getters['dashboard/getSearchTerm'];
+        return this.$store.getters["dashboard/getSearchTerm"];
       },
       set(value) {
-        this.$store.commit('dashboard/setSearchTerm', value);
-      },
+        this.$store.commit("dashboard/setSearchTerm", value);
+      }
     },
     selectedCategory: {
       get() {
-        return this.$store.getters['dashboard/getSelectedCategory'];
+        return this.$store.getters["dashboard/getSelectedCategory"];
       },
       set(value) {
-        this.$store.commit('dashboard/setSelectedCategory', value);
+        this.$store.commit("dashboard/setSelectedCategory", value);
         this.scrollToTop();
-      },
+      }
     },
     numOfItemsInCart() {
-      return this.$store.getters['cart/totalCartItems'];
+      return this.$store.getters["cart/totalCartItems"];
     },
     walletBalance() {
-      return this.$store.getters['wallet/walletBalance'];
+      return this.$store.getters["wallet/walletBalance"];
     },
     isLanding() {
-      return this.$route.path === '/dashboard';
-    },
+      return this.$route.path === "/dashboard";
+    }
   },
   methods: {
     enter() {
@@ -259,56 +254,56 @@ export default {
       return Math.floor(Math.random() * this.textLists.length);
     },
     showWallet(value) {
-      this.$store.commit('wallet/toggleWallet', value);
+      this.$store.commit("wallet/toggleWallet", value);
     },
     showShoppingCart(value) {
-      this.$store.commit('cart/toggleCart', value);
+      this.$store.commit("cart/toggleCart", value);
     },
     menuActions(menuItem) {
       switch (menuItem) {
-        case 'Switch To Courier': {
-          this.$router.push('/courier');
+        case "Switch To Courier": {
+          this.$router.push("/courier");
           break;
         }
-        case 'Account': {
-          this.$router.push('/account');
+        case "Account": {
+          this.$router.push("/account");
           break;
         }
-        case 'Orders': {
-          this.$router.push('/orders');
+        case "Orders": {
+          this.$router.push("/orders");
           break;
         }
-        case 'Wallet': {
-          this.$store.commit('wallet/toggleWallet', true);
+        case "Wallet": {
+          this.$store.commit("wallet/toggleWallet", true);
           break;
         }
-        case 'Logout':
+        case "Logout":
           {
-            this.$store.dispatch('login/logout').then(
-              (response) => {
+            this.$store.dispatch("login/logout").then(
+              response => {
                 const allCookies = browserCookies.all();
 
                 for (const cookieName in allCookies) {
                   browserCookies.erase(cookieName);
                 }
 
-                this.$router.push('/home');
+                this.$router.push("/home");
               },
-              (error) => {
-                this.$store.commit('login/logoutFailed');
-              },
+              error => {
+                this.$store.commit("login/logoutFailed");
+              }
             );
           }
           break;
       }
     },
     goToDashboard() {
-      this.$router.push('/dashboard');
+      this.$router.push("/dashboard");
     },
     scrollToTop() {
       window.scrollTo(0, 0);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -321,9 +316,6 @@ export default {
   margin-right: 10px;
 }
 
-#shopping_cart {
-  padding-left: 10px;
-}
 .main-toolbar {
   position: -webkit-sticky; /* Safari */
   position: sticky;

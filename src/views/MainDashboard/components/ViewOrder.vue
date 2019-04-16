@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import browserCookies from 'browser-cookies';
-import axios from '../../../axios.js';
+import browserCookies from "browser-cookies";
+import axios from "../../../axios.js";
 
 export default {
   data() {
@@ -63,16 +63,16 @@ export default {
       CurrentOrderId: parseInt(this.$route.query.order),
       items: [],
       total: 0.0,
-      isLoading: false,
+      isLoading: false
     };
   },
   computed: {
     orderStatus() {
-      return this.$store.getters['orders/status'];
+      return this.$store.getters["orders/status"];
     },
     updatedCourierInfo() {
-      return this.$store.getters['orders/info'];
-    },
+      return this.$store.getters["orders/info"];
+    }
   },
   mounted() {
     this.getOrderSummary();
@@ -82,25 +82,25 @@ export default {
       this.isLoading = true;
       axios
         .get(`/api/orders/${this.$route.query.order}/summary`)
-        .then((response) => {
+        .then(response => {
           this.isLoading = false;
           const orderInfo = response.data.orderInfo[0];
-          if (orderInfo.customer_id !== browserCookies.get('user_id')) {
-            this.$router.push('/orders');
+          if (orderInfo.customer_id !== browserCookies.get("user_id")) {
+            this.$router.push("/orders");
           }
           this.items = response.data.productList;
-          this.$store.commit('orders/changeStatus', orderInfo.delivery_status);
-          this.items.forEach((item) => {
+          this.$store.commit("orders/changeStatus", orderInfo.delivery_status);
+          this.items.forEach(item => {
             item.item_total = item.price * item.quantity;
             this.total += item.item_total;
           });
-          this.$store.commit('orders/changeOrder', this.$route.query.order);
-          this.$store.dispatch('orders/getInfo', this.$route.query.order, {
-            root: true,
+          this.$store.commit("orders/changeOrder", this.$route.query.order);
+          this.$store.dispatch("orders/getInfo", this.$route.query.order, {
+            root: true
           });
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="css">

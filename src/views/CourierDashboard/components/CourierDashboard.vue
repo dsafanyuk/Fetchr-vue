@@ -11,7 +11,7 @@
 
     <!-- MOBILE AND TABLETS -->
     <div class="hidden-lg-and-up row">
-      <div class="col-md-10 offset-md-1 col-sm-5">
+      <v-flex xs10 offset-xs-1 sm5>
         <v-tabs height="80px" centered light show-arrows grow v-model.lazy="active" mandatory>
           <v-tabs-slider color="accent"></v-tabs-slider>
           <v-tab href="#baby1">Available ({{availableOrders.length }})</v-tab>
@@ -35,11 +35,11 @@
             ></CourierDeliveredOrders>
           </v-tab-item>
         </v-tabs>
-      </div>
+      </v-flex>
     </div>
     <!-- Computers -->
     <div class="row hidden-md-and-down">
-      <div class="col-lg-10 offset-lg-1">
+      <v-flex xs10 offset-xs-1>
         <v-tabs
           height="80px"
           centered
@@ -72,28 +72,28 @@
             ></CourierDeliveredOrders>
           </v-tab-item>
         </v-tabs>
-      </div>
+      </v-flex>
     </div>
   </v-app>
 </template>
 
 <script>
-import Toasted from 'vue-toasted';
-import CourierOrderSummary from './CourierOrderSummary';
-import CourierDeliveredOrders from './CourierDeliveredOrders';
-import CourierSummaryCard from './CourierSummaryCard.vue';
-import CourierAvailableOrders from './CourierAvailableOrders';
-import CourierAcceptedOrders from './CourierAcceptedOrders';
-import axios from '../../../axios.js';
+import Toasted from "vue-toasted";
+import CourierOrderSummary from "./CourierOrderSummary";
+import CourierDeliveredOrders from "./CourierDeliveredOrders";
+import CourierSummaryCard from "./CourierSummaryCard.vue";
+import CourierAvailableOrders from "./CourierAvailableOrders";
+import CourierAcceptedOrders from "./CourierAcceptedOrders";
+import axios from "../../../axios.js";
 
 export default {
   data() {
     return {
-      active: 'baby1',
+      active: "baby1",
       summaryOrder: {},
       summaryIsActive: false,
       revenue: 0,
-      availableOrderSum: 0,
+      availableOrderSum: 0
     };
   },
   components: {
@@ -101,45 +101,45 @@ export default {
     CourierAvailableOrders,
     CourierAcceptedOrders,
     CourierDeliveredOrders,
-    CourierOrderSummary,
+    CourierOrderSummary
   },
   created: function clearOrders() {
-    this.$store.dispatch('courier/clearAllOrders');
+    this.$store.dispatch("courier/clearAllOrders");
   },
   mounted: function loadOrder() {
-    this.$store.commit('courier/startLoading');
-    this.$store.dispatch('courier/refreshAllOrders');
+    this.$store.commit("courier/startLoading");
+    this.$store.dispatch("courier/refreshAllOrders");
   },
   computed: {
     availableOrders() {
-      return this.$store.getters['courier/availableOrders'];
+      return this.$store.getters["courier/availableOrders"];
     },
     deliveredOrders() {
-      return this.$store.getters['courier/deliveredOrders'];
+      return this.$store.getters["courier/deliveredOrders"];
     },
     acceptedOrders() {
-      return this.$store.getters['courier/acceptedOrders'];
-    },
+      return this.$store.getters["courier/acceptedOrders"];
+    }
   },
 
   methods: {
     toggleOrderSummary(value) {
       if (value) this.summaryOrder = value;
-      else this.summaryOrder = '';
+      else this.summaryOrder = "";
 
       if (this.toggleSummary) this.summaryIsActive = false;
       else this.summaryIsActive = true;
     },
     getDeliveredOrders() {
-      this.$store.dispatch('courier/getDeliveredOrders');
+      this.$store.dispatch("courier/getDeliveredOrders");
     },
     getAcceptedOrders() {
-      this.$store.dispatch('courier/getAcceptedOrders');
+      this.$store.dispatch("courier/getAcceptedOrders");
     },
     getAvailableOrders() {
-      this.$store.dispatch('courier/getAvailableOrders');
-    },
-  },
+      this.$store.dispatch("courier/getAvailableOrders");
+    }
+  }
 };
 </script>
 

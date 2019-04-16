@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <div class="container register">
-      <div class="col-md-12 mx-auto register-right">
-        <div class="row register-form">
-          <div class="col-md-6 mx-auto">
+    <v-container>
+      <v-flex xs12>
+        <v-flex class="row register-form">
+          <v-flex xs12>
             <img class="center_img" width="300px" height="300px" src="../assets/images/logo.png">
-          </div>
-          <div class="col-md-6 mx-auto">
+          </v-flex>
+          <v-flex xs12>
             <div class="form-group">
               <h4 class="text-center form_h">Start your Fetchr experience!</h4>
             </div>
@@ -36,7 +36,7 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|email'"
-                :type="email"
+                :type="'email'"
                 v-model="cEmail"
                 :error-messages="errors.collect('cEmail')"
                 data-vv-name="cEmail"
@@ -72,7 +72,7 @@
               <v-text-field
                 v-validate="'required|min:8'"
                 autocomplete="new-password"
-                :type="password"
+                :type="'password'"
                 v-model="cPassword"
                 :error-messages="errors.collect('cPassword')"
                 data-vv-name="cPassword"
@@ -84,7 +84,7 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|min:8|confirmed:cPassword'"
-                :type="password"
+                :type="'password'"
                 v-model="cRepeatPassword"
                 :error-messages="errors.collect('cRepeatPassword')"
                 data-vv-name="cRepeatPassword"
@@ -110,72 +110,72 @@
               <br>
               <router-link to="/home" class="underline">Go Home here</router-link>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </v-flex>
+        </v-flex>
+      </v-flex>
+    </v-container>
   </v-app>
 </template>
 
 <script>
-import Toasted from 'vue-toasted';
-import Vue from 'vue';
-import axios from '../axios';
+import Toasted from "vue-toasted";
+import Vue from "vue";
+import axios from "../axios";
 
 export default {
   $_veeValidate: {
-    validator: 'new',
+    validator: "new"
   },
 
   //* ****************************************** Component Name  ********************************/
-  name: 'registration',
+  name: "registration",
   data() {
     return {
-      cFirstname: '',
-      cLastname: '',
-      cEmail: '',
-      cRoom: '',
-      cPhone: '',
-      cPassword: '',
-      cRepeatPassword: '',
+      cFirstname: "",
+      cLastname: "",
+      cEmail: "",
+      cRoom: "",
+      cPhone: "",
+      cPassword: "",
+      cRepeatPassword: "",
       dictionary: {
         attributes: {
-          cFirstname: 'First Name',
-          cLastname: 'Last Name',
-          cEmail: 'E-mail Address',
-          cRoom: 'Room Number',
-          cPhone: 'Phone Number',
-          cPassword: 'Password',
-          cRepeatPassword: 'Confirm Password',
+          cFirstname: "First Name",
+          cLastname: "Last Name",
+          cEmail: "E-mail Address",
+          cRoom: "Room Number",
+          cPhone: "Phone Number",
+          cPassword: "Password",
+          cRepeatPassword: "Confirm Password"
         },
         custom: {
           cFirstname: {
-            required: () => 'First Name cannot be empty',
-            max: 'The First Name field may not be greater than 15 characters',
+            required: () => "First Name cannot be empty",
+            max: "The First Name field may not be greater than 15 characters"
           },
           cLastname: {
-            required: () => 'Last Name cannot be empty',
-            max: 'The Last Name field may not be greater than 15 characters',
-          },
-        },
-      },
+            required: () => "Last Name cannot be empty",
+            max: "The Last Name field may not be greater than 15 characters"
+          }
+        }
+      }
     };
   },
 
   mounted() {
-    this.$validator.localize('en', this.dictionary);
+    this.$validator.localize("en", this.dictionary);
   },
 
   //* ****************************************** Methods Begin Here  ********************************/
   methods: {
     clear() {
-      this.cFirstname = '';
-      this.cLastname = '';
-      this.cEmail = '';
-      this.cRoom = '';
-      this.cPhone = '';
-      this.cPassword = '';
-      this.cRepeatPassword = '';
+      this.cFirstname = "";
+      this.cLastname = "";
+      this.cEmail = "";
+      this.cRoom = "";
+      this.cPhone = "";
+      this.cPassword = "";
+      this.cRepeatPassword = "";
       this.$validator.reset();
     },
     registerCustomer(e) {
@@ -183,29 +183,29 @@ export default {
 
       this.$validator
         .validateAll()
-        .then((result) => {
+        .then(result => {
           if (result) {
             axios
-              .post('api/users/register', {
+              .post("api/users/register", {
                 first_name: this.cFirstname,
                 last_name: this.cLastname,
                 email_address: this.cEmail,
                 room_num: this.cRoom,
                 phone_number: this.cPhone,
-                password: this.cPassword,
+                password: this.cPassword
               })
-              .then((response) => {
+              .then(response => {
                 if (response.status === 200) {
-                  this.$router.push('/login');
+                  this.$router.push("/login");
                 }
               })
-              .catch((error) => {
+              .catch(error => {
                 if (error.response.status === 400) {
                   Vue.toasted.show(error.response.data, {
-                    theme: 'bubble',
+                    theme: "bubble",
                     duration: 4000,
-                    position: 'top-center',
-                    icon: 'report_problem',
+                    position: "top-center",
+                    icon: "report_problem"
                   });
                 }
                 if (error.response) {
@@ -218,11 +218,11 @@ export default {
               });
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

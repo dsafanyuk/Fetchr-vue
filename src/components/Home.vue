@@ -46,17 +46,7 @@
               :src="gif.src"
               transition="fade"
               reverse-transition="fade"
-            >
-              <v-layout
-                class="firstCarousel"
-                v-if="i === 0"
-                justify-center
-                align-center
-                v-bind:data-logo="faintLogo"
-              >
-                <div class="display-1">Click the right arrow to see how it works!</div>
-              </v-layout>
-            </v-carousel-item>
+            ></v-carousel-item>
           </v-flex>
         </v-carousel>
       </v-layout>
@@ -74,6 +64,7 @@
           to="/register"
           large
           round
+          dark
           class="hero-text hero-button"
           color="#414141"
         >Sign up to be a courier!</v-btn>
@@ -129,17 +120,17 @@
 </template>
 
 <script>
-import Logo from '../assets/images/fetchr_header_logo_colored.png';
-import AddToCart from '../assets/images/AddToCart.gif';
-import AddToFavorites from '../assets/images/AddToFavorites.gif';
-import AddToWallet from '../assets/images/AddToWallet.gif';
-import CheckOut from '../assets/images/CheckOut.gif';
-import Josh from '../assets/images/Johnson.png';
-import Ben from '../assets/images/Kintaudi.png';
-import James from '../assets/images/Limantara.png';
-import Caleb from '../assets/images/Murray.png';
-import Dave from '../assets/images/Safanyuk.png';
-import Kesney from '../assets/images/Saurel.png';
+import Logo from "../assets/images/fetchr_header_logo_colored.png";
+import AddToCart from "../assets/images/AddToCart.gif";
+import AddToFavorites from "../assets/images/AddToFavorites.gif";
+import AddToWallet from "../assets/images/AddToWallet.gif";
+import CheckOut from "../assets/images/CheckOut.gif";
+import Josh from "../assets/images/Johnson.png";
+import Ben from "../assets/images/Kintaudi.png";
+import James from "../assets/images/Limantara.png";
+import Caleb from "../assets/images/Murray.png";
+import Dave from "../assets/images/Safanyuk.png";
+import Kesney from "../assets/images/Saurel.png";
 
 export default {
   data() {
@@ -147,60 +138,59 @@ export default {
       faintLogo: Logo,
       links: [
         {
-          name: 'Login',
-          to: '/login',
+          name: "Login",
+          to: "/login"
         },
         {
-          name: 'Register',
-          to: '/register',
-        },
+          name: "Register",
+          to: "/register"
+        }
       ],
       gifs: [
-        { src: '', title: 'Welcome to Fetchr' },
-        { src: AddToCart, title: 'Add Items to Cart' },
-        { src: AddToFavorites, title: 'Add Your Favorite Items' },
-        { src: AddToWallet, title: 'Add More Cash' },
-        { src: CheckOut, title: 'Checkout!' },
+        { src: AddToCart, title: "Add Items to Cart" },
+        { src: AddToFavorites, title: "Add Your Favorite Items" },
+        { src: AddToWallet, title: "Add More Cash" },
+        { src: CheckOut, title: "Checkout!" }
       ],
       gifSlide: 0,
       team: [
         {
           portrait: Dave,
-          name: 'Dave Safanyuk',
-          role: 'Team Leader',
-          bio: 'Tall; Likes computers; Bad eyesight',
+          name: "Dave Safanyuk",
+          role: "Team Leader",
+          bio: "Tall; Likes computers; Bad eyesight"
         },
         {
           portrait: Josh,
-          name: 'Josh Johnson',
-          role: 'Assistent Team Leader / Scheduler',
-          bio: 'Trades in the stock market; Guacamole',
+          name: "Josh Johnson",
+          role: "Assistent Team Leader / Scheduler",
+          bio: "Trades in the stock market; Guacamole"
         },
         {
           portrait: Kesney,
-          name: 'Kesney Saurel',
-          role: 'User Interface / User Experience',
-          bio: 'Futbol player; Forex trader; Yeezy',
+          name: "Kesney Saurel",
+          role: "User Interface / User Experience",
+          bio: "Futbol player; Forex trader; Yeezy"
         },
         {
           portrait: James,
-          name: 'James Limintara',
-          role: 'Quality Assurance',
-          bio: 'Professional problem solver; Dabber',
+          name: "James Limintara",
+          role: "Quality Assurance",
+          bio: "Professional problem solver; Dabber"
         },
         {
           portrait: Caleb,
-          name: 'Caleb Murray',
-          role: 'Database Administrator',
-          bio: 'Lives on rice and salmon; Olen Yhdysvalloista',
+          name: "Caleb Murray",
+          role: "Database Administrator",
+          bio: "Lives on rice and salmon; Olen Yhdysvalloista"
         },
         {
           portrait: Ben,
-          name: 'Ben Kintaudi',
-          role: 'Communications Coordinator',
-          bio: 'Loves to play soccer; The weird one;',
-        },
-      ],
+          name: "Ben Kintaudi",
+          role: "Communications Coordinator",
+          bio: "Loves to play soccer; The weird one;"
+        }
+      ]
     };
   },
   mounted() {
@@ -214,8 +204,8 @@ export default {
       setTimeout(() => {
         location.href = hashtag;
       }, 1);
-    },
-  },
+    }
+  }
 };
 </script>
 

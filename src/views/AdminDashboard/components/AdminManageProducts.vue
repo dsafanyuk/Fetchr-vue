@@ -101,70 +101,70 @@
 </template>
 
 <script>
-import axios from '../../../axios.js';
+import axios from "../../../axios.js";
 
 export default {
   data() {
     return {
       headers: [
-        { text: 'Product #', align: 'center', value: 'product_id' },
-        { text: 'Product Name', align: 'right', value: 'product_name' },
-        { text: 'Price', align: 'right', value: 'product_price' },
-        { text: 'Category', align: 'right', value: 'category' },
-        { text: 'Active', align: 'center', value: 'is_active' },
+        { text: "Product #", align: "center", value: "product_id" },
+        { text: "Product Name", align: "right", value: "product_name" },
+        { text: "Price", align: "right", value: "product_price" },
+        { text: "Category", align: "right", value: "category" },
+        { text: "Active", align: "center", value: "is_active" },
         {
-          text: 'Actions',
-          align: 'center',
-          value: 'name',
-          sortable: false,
-        },
+          text: "Actions",
+          align: "center",
+          value: "name",
+          sortable: false
+        }
       ],
-      imageName: '',
-      imageUrl: '',
-      search: '',
+      imageName: "",
+      imageUrl: "",
+      search: "",
       sending: false,
       dialog: false,
       editedIndex: -1,
       editedItem: {
-        product_id: '',
-        product_name: '',
-        price: '',
-        category: '',
-        is_active: 'false',
-        imageFile: '',
+        product_id: "",
+        product_name: "",
+        price: "",
+        category: "",
+        is_active: "false",
+        imageFile: ""
       },
       defaultItem: {
-        product_name: '',
-        price: '',
-        category: '',
-        is_active: 'false',
-        imageFile: '',
+        product_name: "",
+        price: "",
+        category: "",
+        is_active: "false",
+        imageFile: ""
       },
       categories: [
-        'snacks',
-        'drinks',
-        'school_supplies',
-        'misc',
-        'personal',
-        'electronics',
-      ],
+        "snacks",
+        "drinks",
+        "school_supplies",
+        "misc",
+        "personal",
+        "electronics"
+      ]
     };
   },
   created() {
-    this.$store.dispatch('admin/retrieveProducts');
+    this.$store.dispatch("admin/retrieveProducts");
   },
   computed: {
     products() {
-      return this.$store.getters['admin/showProducts'];
+      return this.$store.getters["admin/showProducts"];
     },
     formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
-    },
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    }
   },
   watch: {
     dialog(val) {
       val || this.close();
-    },
+    }
   },
   methods: {
     editItem(item) {
@@ -180,7 +180,7 @@ export default {
         this.editedIndex = -1;
       }, 300);
       this.$refs.form.reset();
-      this.imageUrl = '';
+      this.imageUrl = "";
     },
 
     save() {
@@ -193,15 +193,15 @@ export default {
       this.sending = true;
       if (this.editedIndex === -1) {
         this.$store
-          .dispatch('admin/createNewProduct', this.editedItem)
-          .then((result) => {
+          .dispatch("admin/createNewProduct", this.editedItem)
+          .then(result => {
             this.sending = false;
             this.close();
           });
       } else {
         this.$store
-          .dispatch('admin/editExistProduct', this.editedItem)
-          .then((result) => {
+          .dispatch("admin/editExistProduct", this.editedItem)
+          .then(result => {
             this.sending = false;
             this.close();
           });
@@ -209,24 +209,24 @@ export default {
     },
     onFilePicked(e) {
       const { files } = e.target;
-      if (files[0] !==== undefined) {
+      if (files[0] !== undefined) {
         this.imageName = files[0].name;
-        if (this.imageName.lastIndexOf('.') <= 0) {
+        if (this.imageName.lastIndexOf(".") <= 0) {
           return;
         }
         const fr = new FileReader();
         fr.readAsDataURL(files[0]);
-        fr.addEventListener('load', () => {
+        fr.addEventListener("load", () => {
           this.imageUrl = fr.result;
           this.editedItem.imageFile = files[0]; // this is an image file that can be sent to server...
         });
       } else {
-        this.imageName = '';
-        this.editedItem.imageFile = '';
-        this.imageUrl = '';
+        this.imageName = "";
+        this.editedItem.imageFile = "";
+        this.imageUrl = "";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

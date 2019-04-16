@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="row hidden-md-and-down">
-      <div class="col-lg-4">
+    <v-layout row class="hidden-md-and-down">
+      <v-flex xs4>
         <div class="card-box">
           <div class="bar-widget">
             <div class="table-box">
@@ -124,10 +124,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-flex>
 
       <!-- Ban 2 -->
-      <div class="col-lg-4">
+      <v-flex xs4>
         <div class="card-box">
           <div class="bar-widget">
             <div class="table-box">
@@ -252,10 +252,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-flex>
 
       <!-- Ban 3 -->
-      <div class="col-lg-4">
+      <v-flex xs4>
         <div class="card-box">
           <div class="bar-widget">
             <div class="table-box">
@@ -380,12 +380,12 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-flex>
 
       <!-- Start of Recent Order -->
-    </div>
-    <div class="row hidden-lg-and-up">
-      <div class="col-lg-4">
+    </v-layout>
+    <v-layout row class="hidden-lg-and-up">
+      <v-flex xs4>
         <div class="card-box">
           <div class="bar-widget">
             <div class="table-box">
@@ -500,10 +500,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-flex>
 
       <!-- Ban 2 -->
-      <div class="col-lg-4">
+      <v-flex xs4>
         <div class="card-box">
           <div class="bar-widget">
             <div class="table-box">
@@ -619,10 +619,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-flex>
 
       <!-- Ban 3 -->
-      <div class="col-lg-4">
+      <v-flex xs4>
         <div class="card-box">
           <div class="bar-widget">
             <div class="table-box">
@@ -738,44 +738,44 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-flex>
       <!-- Start of Recent Order -->
-    </div>
+    </v-layout>
   </div>
 </template>
 
 <script>
-import browserCookies from 'browser-cookies';
-import Toasted from 'vue-toasted';
-import { mapGetters } from 'vuex';
-import axios from '../../../axios.js';
+import browserCookies from "browser-cookies";
+import Toasted from "vue-toasted";
+import { mapGetters } from "vuex";
+import axios from "../../../axios.js";
 
-const user = browserCookies.get('user_id');
+const user = browserCookies.get("user_id");
 
 export default {
-  name: 'CourierSummaryCard',
+  name: "CourierSummaryCard",
   computed: {
     isLoading() {
-      return this.$store.getters['courier/isLoading'];
+      return this.$store.getters["courier/isLoading"];
     },
     availableOrders() {
-      return this.$store.getters['courier/availableOrders'];
+      return this.$store.getters["courier/availableOrders"];
     },
     deliveredOrders() {
-      return this.$store.getters['courier/deliveredOrders'];
+      return this.$store.getters["courier/deliveredOrders"];
     },
     deliveredRevenue() {
-      return this.$store.getters['courier/getDeliveredRevenueSum'];
-    },
+      return this.$store.getters["courier/getDeliveredRevenueSum"];
+    }
   },
   methods: {},
 
   mounted() {
-    this.$store.dispatch('courier/updateDeliveredRevenue').then(() => {
+    this.$store.dispatch("courier/updateDeliveredRevenue").then(() => {
       this.delivered_revenue = this.$store.getters[
-        'courier/getDeliveredRevenueSum'
+        "courier/getDeliveredRevenueSum"
       ];
     });
-  },
+  }
 };
 </script>
